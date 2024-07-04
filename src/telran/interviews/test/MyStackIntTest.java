@@ -1,42 +1,66 @@
 package telran.interviews.test;
 
-import java.util.EmptyStackException;
+import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import telran.interviews.MyStackInt;
 
-import static org.junit.jupiter.api.Assertions.*;
+class MyStackIntTest {
+private static final long N_ELEMENTS = 1000;
+MyStackInt stack;
+@BeforeEach
+void setUp() {
+	stack = new MyStackInt();
+}
+	@Test
+	void testPush() {
+		stack.push(100);
+		assertEquals(100, stack.getMaxElement());
+		stack.push(200);
+		assertEquals(200, stack.getMaxElement());
+		stack.push(200);
+		assertEquals(200, stack.getMaxElement());
+		stack.pop();
+		assertEquals(200, stack.getMaxElement());
+		
+	}
 
-public class MyStackIntTest {
+	@Test
+	void testPop() {
+		assertThrowsExactly(EmptyStackException.class, () -> stack.pop());
+		stack.push(100); stack.push(200);
+		assertEquals(200, stack.pop());
+		assertEquals(100, stack.getMaxElement());
+	}
 
-    @Test
-    public void testPush() {
-        MyStackInt stack = new MyStackInt();
-        stack.push(10);
-        assertEquals(10, stack.peek());
-        stack.push(20);
-        assertEquals(20, stack.peek());
-        stack.push(5);
-        assertEquals(20, stack.getMaxElement());
-    }
+	@Test
+	void testPeek() {
+		assertThrowsExactly(EmptyStackException.class, () -> stack.peek());
+		stack.push(100);
+		assertEquals(100, stack.peek());
+	}
 
-    @Test
-    public void testPop() {
-        MyStackInt stack = new MyStackInt();
-        stack.push(10);
-        stack.push(20);
-        assertEquals(20, stack.pop());
-        assertEquals(10, stack.peek());
-        assertEquals(10, stack.getMaxElement());
-    }
-    @Test
-    public void testIsEmpty() {
-        MyStackInt stack = new MyStackInt();
-        assertTrue(stack.isEmpty());
-        stack.push(10);
-        assertFalse(stack.isEmpty());
-    }
+	@Test
+	void testIsEmpty() {
+		assertTrue(stack.isEmpty());
+		stack.push(0);
+		assertFalse(stack.isEmpty());
+	}
 
+	@Test
+	void testGetMaxElement() {
+		int[] randomAr = new Random().ints().limit(N_ELEMENTS).toArray();
+		TreeSet<Integer> treeSet = new TreeSet<>();
+		assertThrowsExactly(EmptyStackException.class, () -> stack.getMaxElement());
+		for(int num: randomAr) {
+			stack.push(num);
+			treeSet.add(num);
+		}
+		assertEquals(treeSet.last(), stack.getMaxElement());
+	}
 
 }
