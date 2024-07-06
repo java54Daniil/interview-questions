@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import telran.interviews.Connection;
 import telran.interviews.ConnectionPool;
 
-class ConnectionPoolTest {
+public class ConnectionPoolTest {
 private static final long ID1 = 121;
 private static final long ID4 = 124;
 private static final long ID2 = 122;
